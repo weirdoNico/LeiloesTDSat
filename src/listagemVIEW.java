@@ -18,9 +18,25 @@ public class listagemVIEW extends javax.swing.JFrame {
      */
     public listagemVIEW() {
         initComponents();
-        listarProdutos();
+        preencherTabela();
     }
+    
+    public void preencherTabela() {
+    ProdutosDAO dao = new ProdutosDAO();
+    ArrayList<ProdutosDTO> lista = dao.listarProdutos();
 
+    DefaultTableModel modelo = (DefaultTableModel) listaProdutos.getModel();
+    modelo.setRowCount(0);
+
+    for (ProdutosDTO p : lista) {
+        modelo.addRow(new Object[]{
+            p.getId(),
+            p.getNome(),
+            p.getValor(),
+            p.getStatus()
+        });
+    }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,7 +157,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         ProdutosDAO produtosdao = new ProdutosDAO();
         
         //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        preencherTabela();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
