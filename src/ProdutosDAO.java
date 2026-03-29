@@ -7,7 +7,6 @@
  *
  * @author Adm
  */
-
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -15,15 +14,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.SQLException;
 
-
 public class ProdutosDAO {
-    
+
     Connection conn;
     PreparedStatement prep;
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
-    
-    public int cadastrarProduto (ProdutosDTO produto){
+
+    public int cadastrarProduto(ProdutosDTO produto) {
         int status;
 
         try {
@@ -38,9 +36,9 @@ public class ProdutosDAO {
             return ex.getErrorCode();
         }
     }
-    
-    public ArrayList<ProdutosDTO> listarProdutos(){
-        Connection conn = new conectaDAO().connectDB();
+
+    public ArrayList<ProdutosDTO> listarProdutos() {
+
         String sql = "SELECT * FROM produtos";
         ArrayList<ProdutosDTO> listaProdutos = new ArrayList<>();
 
@@ -67,9 +65,25 @@ public class ProdutosDAO {
             return null;
         }
     }
-    
-    
-    
         
-}
 
+    public int venderProduto(ProdutosDTO produto) {
+        int status;
+        int idProduto = produto.getId();
+
+        try {
+            prep = conn.prepareStatement("UPDATE produtos SET status = ? WHERE id = ?");
+
+            prep.setString(1, "Vendido");
+            prep.setInt(2, idProduto);
+
+            status = prep.executeUpdate();
+            return status;
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao atualizar status: " + ex.getMessage());
+            return ex.getErrorCode();
+        }
+    }
+
+}

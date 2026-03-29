@@ -27,7 +27,7 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     DefaultTableModel modelo = (DefaultTableModel) listaProdutos.getModel();
     modelo.setRowCount(0);
-
+    if (lista != null) {
     for (ProdutosDTO p : lista) {
         modelo.addRow(new Object[]{
             p.getId(),
@@ -35,6 +35,7 @@ public class listagemVIEW extends javax.swing.JFrame {
             p.getValor(),
             p.getStatus()
         });
+    }
     }
     }
     /**
